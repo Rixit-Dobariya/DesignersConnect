@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "185207853106",
+    "project_id": "designersconnect-f197d",
+    "storage_bucket": "designersconnect-f197d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185207853106:android:516707a96b356c1e602c2b",
+        "android_client_info": {
+          "package_name": "com.example.designersconnect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHYibRnnWQXCSGrRmHL14y1QQzYdqEJ5k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
