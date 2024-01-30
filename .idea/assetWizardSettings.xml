@@ -80,7 +80,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\01\Downloads\1.jpg" />
+                                                <entry key="imagePath" value="C:\Users\01\Downloads\Screenshot_2024-01-18_185903-removebg-preview (1).png" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -108,6 +108,12 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="backgroundAssetType" value="COLOR" />
+                                      <entry key="backgroundColor" value="f71922" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -301,7 +307,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/arrow_back_ios/baseline_arrow_back_ios_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/account_circle/baseline_account_circle_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -311,7 +317,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="baseline_arrow_back_ios_24" />
+                            <entry key="outputName" value="baseline_account_circle_24" />
                             <entry key="sourceFile" value="C:\Users\01\StudioProjects\DesignersConnect" />
                           </map>
                         </option>

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,13 +25,22 @@ public class MyProfileFragment extends Fragment {
                              Bundle savedInstanceState)
     {
         binding = FragmentMyProfileBinding.inflate(inflater, container, false);
-        binding.btnSettings.setOnClickListener(new View.OnClickListener() {
+        binding.btnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), EditProfileActivity.class);
                 startActivity(i);
             }
         });
+
+        binding.imgSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(i);
+            }
+        });
+
         return binding.getRoot();
     }
 }
