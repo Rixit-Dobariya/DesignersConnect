@@ -1,12 +1,25 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.DesignersConnect" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:colorBackground">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <!--        primary-->
+        <item name="android:colorPrimary">@color/white</item>
+        <item name="android:colorPrimaryDark">@color/white</item>
+        <item name="android:colorAccent">@color/red</item>
+        <!-- Status bar -->
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- navigation bar -->
+        <item name="android:navigationBarColor">@color/white</item>
+        <!--        other-->
+        <item name="bottomNavigationStyle">@style/BottomNavStyle</item>
     </style>
-
+    <style name="BottomNavStyle" parent="Widget.Design.BottomNavigationView">
+        <item name="android:background">@color/white</item>
+    </style>
     <style name="my_profile">
         <item name="android:textSize">32sp</item>
-        <item name="android:textColor">#000000</item>
     </style>
 
     <style name="Theme.DesignersConnect" parent="Base.Theme.DesignersConnect" />
@@ -31,13 +44,11 @@
 
     <style name="MyTextViewStyle" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/montserrat_regular</item>
-        <item name="android:color">@color/black</item>
         <item name="android:gravity">center</item>
     </style>
 
     <style name="HeadingStyle" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/montserrat_bold</item>
-        <item name="android:color">@color/black</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">24dp</item>
     </style>
@@ -70,9 +81,18 @@
 
     <style name="notificationStyle" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/montserrat_medium</item>
-        <item name="android:color">@color/black</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">15dp</item>
     </style>
+
+    <style name="fragmentHeading" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="searchviewStyle" parent="Widget.AppCompat.SearchView" >
+        <item name="android:elevation">5dp</item>
+    </style>
+
 
 </resources>

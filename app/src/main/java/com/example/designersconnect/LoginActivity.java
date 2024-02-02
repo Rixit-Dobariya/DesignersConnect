@@ -25,14 +25,10 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
         mAuth = FirebaseAuth.getInstance();
-        binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(i);
-            }
+        binding.btnSignUp.setOnClickListener(v -> {
+            Intent i = new Intent(LoginActivity.this, SignUpActivity.class);
+            startActivity(i);
         });
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +58,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        binding.btnPassword.setOnClickListener(v->{
+            startActivity(new Intent(this, ResetPasswordActivity.class));
+        });
 
     }
 }

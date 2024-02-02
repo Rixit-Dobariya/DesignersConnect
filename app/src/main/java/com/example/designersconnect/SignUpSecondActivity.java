@@ -5,19 +5,18 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.example.designersconnect.Models.UserData;
 import com.example.designersconnect.databinding.ActivitySignUpSecondBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,6 +38,7 @@ public class SignUpSecondActivity extends AppCompatActivity {
     String profilePicture, userId,email,password,displayName,username,jobTitle;
     ActivityResultLauncher<Intent> activityResultLauncher;
     DatabaseReference databaseReference;
+    Dialog customDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +79,10 @@ public class SignUpSecondActivity extends AppCompatActivity {
             public void onClick(View v)
             {
 
-                binding.progressbar1.setVisibility(View.VISIBLE);
+                customDialog = new Dialog(getApplicationContext());
+                customDialog.setContentView(R.layout.process);
+                customDialog.setCancelable(false);
+                customDialog.show();
                 Intent i = getIntent();
                 email = i.getStringExtra("email");
                 password = i.getStringExtra("password");
@@ -98,10 +101,11 @@ public class SignUpSecondActivity extends AppCompatActivity {
                                 {
                                     userId = mAuth.getCurrentUser().getUid();
                                     uploadImage();
-                                } else
+                                }
+                                else
                                 {
                                     Toast.makeText(SignUpSecondActivity.this, "not done", Toast.LENGTH_SHORT).show();
-                                    binding.progressbar1.setVisibility(View.GONE);
+                                    customDialog.dismiss();
                                 }
                             }
                         });
@@ -115,7 +119,7 @@ public class SignUpSecondActivity extends AppCompatActivity {
 
         Intent i = new Intent(SignUpSecondActivity.this, MainActivity.class);
         startActivity(i);
-        binding.progressbar1.setVisibility(View.GONE);
+        customDialog.dismiss();
         finish();
         Toast.makeText(SignUpSecondActivity.this, "done", Toast.LENGTH_LONG).show();
     }

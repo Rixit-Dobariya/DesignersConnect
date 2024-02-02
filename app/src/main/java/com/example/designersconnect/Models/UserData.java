@@ -1,8 +1,9 @@
-package com.example.designersconnect;
+package com.example.designersconnect.Models;
 
 public class UserData {
     String userId, username, displayName, jobTitle, profilePicture;
-    UserData(String userId, String username, String displayName, String jobTitle,String profilePicture)
+    UserData(){}
+    public UserData(String userId, String username, String displayName, String jobTitle, String profilePicture)
     {
         this.userId=userId;
         this.username=username;

@@ -19,5 +19,7 @@ public class EditProfileActivity extends AppCompatActivity {
         String[] arr = getResources().getStringArray(R.array.stringArray);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,arr);
         binding.spinner.setAdapter(arrayAdapter);
+
+        onBackPressed();
     }
 }

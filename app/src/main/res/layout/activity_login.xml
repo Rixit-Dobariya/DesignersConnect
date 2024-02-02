@@ -44,7 +44,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-
         android:id="@+id/etLoginEmail"
         style="@style/MyEditTextStyle"
         android:layout_width="0dp"
