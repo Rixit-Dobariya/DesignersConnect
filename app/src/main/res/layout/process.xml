@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:background="#80000000"
     android:gravity="center"
-
     >
 
     <ProgressBar
@@ -14,6 +13,6 @@
         android:layout_height="wrap_content"
         android:indeterminateTint="@color/red"
         android:progressTint="@color/red"
-
         />
+
 </LinearLayout>

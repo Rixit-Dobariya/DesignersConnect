@@ -1,4 +1,4 @@
-package com.example.designersconnect;
+package com.example.designersconnect.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,26 +35,35 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = binding.etLoginEmail.getText().toString();
                 String password = binding.etLoginPassword.getText().toString();
-                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>()
-                        {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task)
-                            {
-                                if (task.isSuccessful())
-                                {
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    Toast.makeText(LoginActivity.this, ""+user.getDisplayName(), Toast.LENGTH_SHORT).show();
 
-                                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(i);
-                                    finish();
-                                } else
-                                {
-                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
+                if(password.length() < 8)
+                {
+                    Toast.makeText(LoginActivity.this, "Password must contain 8 or more letters", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>()
+                    {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task)
+                        {
+                            if (task.isSuccessful())
+                            {
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                Toast.makeText(LoginActivity.this, ""+user.getDisplayName(), Toast.LENGTH_SHORT).show();
+
+                                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(i);
+                                finish();
+                            } else
+                            {
+                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
                             }
-                        });
+                        }
+                    });
+                }
+
             }
         });
 

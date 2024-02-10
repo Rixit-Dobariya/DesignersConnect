@@ -4,31 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchFragment">
+    tools:context=".Fragments.SearchFragment">
 
-    <AutoCompleteTextView
-        android:id="@+id/searchBar"
+    <androidx.appcompat.widget.SearchView
+        android:id="@id/searchBar"
+        android:background="@drawable/my_edittext_background"
+        android:elevation="10dp"
+        app:queryHint="Search designers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="35dp"
         android:layout_marginTop="35dp"
         android:layout_marginEnd="35dp"
-        android:background="@drawable/my_edittext_background"
-        android:paddingStart="40dp"
-        android:hint="Search designers..."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="8dp"
-        android:src="@drawable/search"
-        app:layout_constraintBottom_toBottomOf="@+id/searchBar"
-        app:layout_constraintStart_toStartOf="@+id/searchBar"
-        app:layout_constraintTop_toTopOf="@+id/searchBar"
         />
+<!--    <AutoCompleteTextView-->
+<!--        android:id="@+id/searchBar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="35dp"-->
+<!--        android:layout_marginTop="35dp"-->
+<!--        android:layout_marginEnd="35dp"-->
+<!--        android:elevation="10dp"-->
+<!--        android:background="@drawable/my_edittext_background"-->
+<!--        android:paddingStart="40dp"-->
+<!--        android:hint="Search designers..."-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <ImageView-->
+<!--        android:layout_width="24dp"-->
+<!--        android:layout_height="24dp"-->
+<!--        android:layout_marginStart="12dp"-->
+<!--        android:elevation="10dp"-->
+<!--        android:src="@drawable/search"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/searchBar"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/searchBar"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/searchBar" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSearchResults"

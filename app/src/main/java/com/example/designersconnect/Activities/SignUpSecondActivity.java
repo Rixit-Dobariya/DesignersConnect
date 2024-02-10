@@ -1,4 +1,4 @@
-package com.example.designersconnect;
+package com.example.designersconnect.Activities;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.designersconnect.Models.UserData;
+import com.example.designersconnect.R;
 import com.example.designersconnect.databinding.ActivitySignUpSecondBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,8 +31,6 @@ import com.google.firebase.storage.UploadTask;
 
 public class SignUpSecondActivity extends AppCompatActivity {
 
-
-    private static final int PICK_IMAGE_REQUEST = 100;
     ActivitySignUpSecondBinding binding;
     FirebaseAuth mAuth;
     Uri selectedImageUri;
@@ -46,7 +45,7 @@ public class SignUpSecondActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,getResources().getStringArray(R.array.stringArray));
-        binding.spJobTitles.setAdapter(arrayAdapter);
+        binding.spJobTitles1.setAdapter(arrayAdapter);
 
         mAuth = FirebaseAuth.getInstance();
         binding.progressbar1.setVisibility(View.GONE);
@@ -79,16 +78,18 @@ public class SignUpSecondActivity extends AppCompatActivity {
             public void onClick(View v)
             {
 
-                customDialog = new Dialog(getApplicationContext());
-                customDialog.setContentView(R.layout.process);
-                customDialog.setCancelable(false);
-                customDialog.show();
+//                customDialog = new Dialog(getApplicationContext());
+//                customDialog.setContentView(R.layout.process);
+//                customDialog.setCancelable(false);
+//                customDialog.show();
                 Intent i = getIntent();
                 email = i.getStringExtra("email");
                 password = i.getStringExtra("password");
                 displayName = i.getStringExtra("displayName");
                 username = i.getStringExtra("username");
-                jobTitle = binding.spJobTitles.getSelectedItem().toString();
+                jobTitle = binding.spJobTitles1.getSelectedItem().toString();
+
+
 
                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>()
                         {
@@ -105,7 +106,7 @@ public class SignUpSecondActivity extends AppCompatActivity {
                                 else
                                 {
                                     Toast.makeText(SignUpSecondActivity.this, "not done", Toast.LENGTH_SHORT).show();
-                                    customDialog.dismiss();
+//                                    customDialog.dismiss();
                                 }
                             }
                         });
@@ -118,8 +119,9 @@ public class SignUpSecondActivity extends AppCompatActivity {
         databaseReference.child(userId).setValue(newUserData);
 
         Intent i = new Intent(SignUpSecondActivity.this, MainActivity.class);
+//        customDialog.dismiss();
         startActivity(i);
-        customDialog.dismiss();
+
         finish();
         Toast.makeText(SignUpSecondActivity.this, "done", Toast.LENGTH_LONG).show();
     }

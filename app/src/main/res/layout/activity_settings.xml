@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingsActivity">
+    tools:context=".Activities.SettingsActivity">
 
 
     <TextView
@@ -20,12 +20,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/cvProfile"
         android:layout_width="match_parent"
         android:layout_height="88dp"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginEnd="16dp"
         app:cardCornerRadius="24dp"
         app:cardElevation="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,21 +58,21 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tvSettingDisplayName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="Design Connect user"
                 android:textSize="17sp"
-                app:layout_constraintEnd_toStartOf="@+id/imgRightArrow"
-                app:layout_constraintHorizontal_bias="0.512"
                 app:layout_constraintStart_toEndOf="@+id/imgAvatar"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/montserrat_regular"
                 android:text="Edit Profile Details"
@@ -85,14 +85,16 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="355dp"
-        android:layout_height="200dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="36dp"
+        android:layout_marginEnd="16dp"
         app:cardCornerRadius="24dp"
         app:cardElevation="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView">
+        app:layout_constraintTop_toBottomOf="@+id/cvProfile">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -140,7 +142,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
                 android:text="Comments Notifications"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
@@ -148,28 +152,39 @@
                 android:id="@+id/switch1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:thumbTint="@color/red"
+                android:trackTint="#AAAAAA"
+                app:layout_constraintBottom_toBottomOf="@+id/textView22"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.769"
+                app:layout_constraintHorizontal_bias="0.751"
                 app:layout_constraintStart_toEndOf="@+id/textView22"
-                tools:layout_editor_absoluteY="58dp" />
+                app:layout_constraintTop_toTopOf="@+id/textView22" />
 
             <Switch
                 android:id="@+id/switch2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:thumbTint="@color/red"
+                android:trackTint="#AAAAAA"
+                app:layout_constraintBottom_toBottomOf="@+id/textView23"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.765"
+                app:layout_constraintHorizontal_bias="0.748"
                 app:layout_constraintStart_toEndOf="@+id/textView23"
-                tools:layout_editor_absoluteY="103dp" />
+                app:layout_constraintTop_toTopOf="@+id/textView23"
+                app:layout_constraintVertical_bias="1.0" />
 
             <Switch
                 android:id="@+id/switch3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:thumbTint="@color/red"
+                android:trackTint="#AAAAAA"
+                app:layout_constraintBottom_toBottomOf="@+id/textView24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.637"
                 app:layout_constraintStart_toEndOf="@+id/textView24"
-                tools:layout_editor_absoluteY="149dp" />
+                app:layout_constraintTop_toTopOf="@+id/textView24" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

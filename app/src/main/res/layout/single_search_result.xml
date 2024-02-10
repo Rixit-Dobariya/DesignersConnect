@@ -10,8 +10,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
-
-        android:background="@drawable/image_view"
+        app:shapeAppearanceOverlay="@style/RoundedImageView"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

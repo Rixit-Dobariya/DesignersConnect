@@ -1,8 +1,9 @@
-package com.example.designersconnect;
+package com.example.designersconnect.Fragments;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -17,6 +18,7 @@ import android.widget.ListAdapter;
 import com.example.designersconnect.Adapters.UserAdapter;
 import com.example.designersconnect.Models.UserData;
 import com.example.designersconnect.databinding.FragmentSearchBinding;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,25 +42,37 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentSearchBinding.inflate(inflater,container,false);
-        users=new ArrayList<>();
+        users = new ArrayList<>();
         userAdapter = new UserAdapter(getActivity(),users);
         binding.rvSearchResults.setAdapter(userAdapter);
         binding.rvSearchResults.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        binding.searchBar.addTextChangedListener(new TextWatcher() {
+        binding.searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+            public boolean onQueryTextSubmit(String query) {
+                if(binding.searchBar.getQuery().toString().isEmpty())
+                {
+                    users.clear();
+                    userAdapter.notifyDataSetChanged();
+                }
+                else
+                {
+                    searchUser(query.toString());
+                }
+                return false;
             }
-
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                searchUser(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
+            public boolean onQueryTextChange(String newText) {
+                if(binding.searchBar.getQuery().toString().isEmpty())
+                {
+                    users.clear();
+                    userAdapter.notifyDataSetChanged();
+                }
+                else
+                {
+                    searchUser(newText.toString());
+                }
+                return false;
             }
         });
         return binding.getRoot();
@@ -66,6 +80,7 @@ public class SearchFragment extends Fragment {
 
     void searchUser(String s)
     {
+        String userId = FirebaseAuth.getInstance().getUid();
         Query query = FirebaseDatabase.getInstance().getReference().child("users")
                 .orderByChild("username").startAt(s).endAt(s + "\uf8ff");
         query.addValueEventListener(new ValueEventListener() {
@@ -75,7 +90,10 @@ public class SearchFragment extends Fragment {
                 for(DataSnapshot snapshot: dataSnapshot.getChildren())
                 {
                     UserData user = snapshot.getValue(UserData.class);
-                    users.add(user);
+                    if(!user.getUserId().equals(userId))
+                    {
+                        users.add(user);
+                    }
                 }
                 userAdapter.notifyDataSetChanged();
             }

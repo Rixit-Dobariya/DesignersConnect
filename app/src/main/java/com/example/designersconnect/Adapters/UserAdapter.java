@@ -2,15 +2,10 @@ package com.example.designersconnect.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.usb.UsbRequest;
-import android.media.audiofx.AutomaticGainControl;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
@@ -19,10 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.designersconnect.Helpers.FollowOperations;
 import com.example.designersconnect.Models.UserData;
-import com.example.designersconnect.ProfileActivity;
+import com.example.designersconnect.Activities.ProfileActivity;
 import com.example.designersconnect.R;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -61,6 +63,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 .load(user.getProfilePicture())
                 .apply(requestOptions)
                 .into(holder.tvsrProfilePhoto);
+        FollowOperations.followText(holder.btnFollow);
+        holder.btnFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FollowOperations.follow(holder.btnFollow,user.getUserId());
+            }
+        });
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.designersconnect;
+package com.example.designersconnect.Fragments;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -84,6 +84,9 @@ public class AddPostFragment extends Fragment {
 
         Post post = new Post(postId,userId,postPicture,description);
         databaseReference.child("posts").child(postId).setValue(post);
+        binding.etDescription.setText("");
+        binding.imgPost.setImageResource(R.drawable.ic_launcher_background);
+        Toast.makeText(getActivity(), "Post added successfully!", Toast.LENGTH_SHORT).show();
         customDialog.dismiss();
     }
 

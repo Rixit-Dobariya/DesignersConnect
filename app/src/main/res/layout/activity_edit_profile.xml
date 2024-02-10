@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditProfileActivity">
+    tools:context=".Activities.EditProfileActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/editTextText2"
+            android:id="@+id/etEditUsername"
             style="@style/SettingsStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,14 +20,14 @@
             android:layout_marginEnd="28dp"
             android:ems="10"
             android:inputType="text"
-            android:text="Your username"
+            android:hint="Your username"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
         <EditText
-            android:id="@+id/editTextText3"
+            android:id="@+id/etEditDisplayName"
             style="@style/SettingsStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,43 +36,21 @@
             android:layout_marginEnd="28dp"
             android:ems="13"
             android:inputType="text"
-            android:text="Your display name"
+            android:hint="Your display name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
         <TextView
-            android:id="@+id/textView17"
-            style="@style/label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
             android:layout_marginTop="16dp"
-            android:text="Email"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
-
-        <TextView
-            android:id="@+id/textView18"
-            style="@style/label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="16dp"
-            android:text="Password"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText" />
-
-        <TextView
             android:id="@+id/textView19"
             style="@style/label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
-            android:layout_marginTop="16dp"
             android:text="Job Title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText4" />
+            app:layout_constraintTop_toBottomOf="@+id/etEditUsername" />
 
         <ImageView
             android:id="@+id/imageView4"
@@ -142,39 +120,10 @@
             android:layout_marginTop="16dp"
             android:text="Username"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
-
-        <EditText
-            android:id="@+id/editTextText"
-            style="@style/SettingsStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="28dp"
-            android:ems="10"
-            android:inputType="text"
-            android:text="Your email"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView17" />
-
-        <EditText
-            android:id="@+id/editTextText4"
-            style="@style/SettingsStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="28dp"
-            android:ems="10"
-            android:inputType="text"
-            android:text="Your password"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView18" />
+            app:layout_constraintTop_toBottomOf="@+id/etEditDisplayName" />
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/spEditJobTitle"
             style="@style/spinnerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -186,7 +135,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
+        <ImageView
+            android:id="@+id/imgArrow"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="12dp"
+            android:rotation="270"
+            android:src="@drawable/baseline_arrow_back_ios_24"
+            app:layout_constraintBottom_toBottomOf="@+id/spEditJobTitle"
+            app:layout_constraintEnd_toEndOf="@+id/spEditJobTitle"
+            app:layout_constraintTop_toTopOf="@+id/spEditJobTitle"
+            app:layout_constraintVertical_bias="0.541" />
+
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSaveProfile"
             style="@style/MyButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -196,6 +158,6 @@
             android:text="Save changes"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner" />
+            app:layout_constraintTop_toBottomOf="@+id/spEditJobTitle" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

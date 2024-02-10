@@ -1,4 +1,4 @@
-package com.example.designersconnect;
+package com.example.designersconnect.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,7 +18,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         binding.button.setOnClickListener(v ->
         {
-            startActivity(new Intent(WelcomeActivity.this,LoginActivity.class));
+            startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
         }
         );
     }

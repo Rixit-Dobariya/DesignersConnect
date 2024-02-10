@@ -64,6 +64,7 @@
         <item name="android:fontFamily">@font/montserrat_regular</item>
         <item name="android:textSize">15sp</item>
         <item name="paddingStart">12dp</item>
+        <item name="height"></item>
     </style>
 
     <style name="SettingsStyle" parent="Widget.AppCompat.EditText">
@@ -89,10 +90,5 @@
         <item name="android:fontFamily">@font/montserrat_bold</item>
         <item name="android:textSize">24sp</item>
     </style>
-
-    <style name="searchviewStyle" parent="Widget.AppCompat.SearchView" >
-        <item name="android:elevation">5dp</item>
-    </style>
-
 
 </resources>
