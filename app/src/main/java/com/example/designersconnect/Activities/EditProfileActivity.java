@@ -148,7 +148,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
     public void updateProfilePictureInDatabase()
     {
-        UserData newUserData = new UserData(userId, userName, displayName, jobTitle, profilePicture);
+        UserData newUserData = new UserData(userId, userName, displayName, jobTitle, profilePicture, "online");
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
         databaseReference.child(userId).setValue(newUserData).addOnCompleteListener(task -> {
         if (task.isSuccessful())

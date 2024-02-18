@@ -48,7 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
         Intent i = getIntent();
         userId = i.getStringExtra("userId");
 
-        FollowOperations.followText(binding.btnProfileFollow);
+        FollowOperations.followText(binding.btnProfileFollow, userId);
         binding.btnProfileFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +56,14 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
         setProfileData();
+        binding.btnMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), ChatActivity.class);
+                i.putExtra("userId",userId);
+                startActivity(i);
+            }
+        });
         binding.imgBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

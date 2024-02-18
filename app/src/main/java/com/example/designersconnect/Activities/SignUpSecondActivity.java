@@ -115,15 +115,18 @@ public class SignUpSecondActivity extends AppCompatActivity {
     }
     public void updateProfilePictureInDatabase()
     {
-        UserData newUserData = new UserData(userId, username, displayName, jobTitle, profilePicture);
-        databaseReference.child(userId).setValue(newUserData);
-
-        Intent i = new Intent(SignUpSecondActivity.this, MainActivity.class);
+        UserData newUserData = new UserData(userId, username, displayName, jobTitle, profilePicture,"online");
+        databaseReference.child(userId).setValue(newUserData).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
 //        customDialog.dismiss();
-        startActivity(i);
+                startActivity(i);
+                Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
 
-        finish();
-        Toast.makeText(SignUpSecondActivity.this, "done", Toast.LENGTH_LONG).show();
     }
     private void uploadImage() {
         if (selectedImageUri != null) {

@@ -9,10 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.designersconnect.Adapters.MessageAdapter;
 import com.example.designersconnect.Models.Message;
+import com.example.designersconnect.Models.UserData;
 import com.example.designersconnect.R;
 import com.example.designersconnect.databinding.ActivityChatBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,6 +36,8 @@ public class ChatActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     List<Message> messageList;
     MessageAdapter messageAdapter;
+    String receiver;
+    String userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,11 +46,34 @@ public class ChatActivity extends AppCompatActivity {
 
         messageList = new ArrayList<>();
         Intent i = getIntent();
-        String receiver = i.getStringExtra("userId");
+        receiver = i.getStringExtra("userId");
+        userId = FirebaseAuth.getInstance().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 //        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+
+        databaseReference.child("users").child(receiver).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists())
+                {
+                    UserData user = snapshot.getValue(UserData.class);
+                    if(user!=null)
+                    {
+                        TextView tvUsername = findViewById(R.id.tvUsername);
+                        TextView tvStatus = findViewById(R.id.tvStatus);
+                        tvUsername.setText(user.getUsername());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         binding.btnSendMessage.setOnClickListener(v->{
             String messageText = binding.etMessage.getText().toString();
@@ -67,7 +94,10 @@ public class ChatActivity extends AppCompatActivity {
                 for(DataSnapshot message:snapshot.getChildren())
                 {
                     Message messageObject = message.getValue(Message.class);
-                    messageList.add(messageObject);
+                    if(messageObject.getSender().equals(userId) && messageObject.getReceiver().equals(receiver) || messageObject.getSender().equals(receiver) && messageObject.getReceiver().equals(userId))
+                    {
+                        messageList.add(messageObject);
+                    }
                 }
                 messageAdapter.notifyDataSetChanged();
             }

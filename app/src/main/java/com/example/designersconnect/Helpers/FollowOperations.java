@@ -19,8 +19,8 @@ public class FollowOperations {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         selfUserId = FirebaseAuth.getInstance().getUid();
     }
-    public static void followText(AppCompatButton btnFollow){
-        databaseReference.child("Follow").child(selfUserId).child("following").addValueEventListener(new ValueEventListener() {
+    public static void followText(AppCompatButton btnFollow, String userId){
+        databaseReference.child("Follow").child(selfUserId).child("following").child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists())

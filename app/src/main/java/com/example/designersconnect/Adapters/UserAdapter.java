@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.designersconnect.Activities.ChatActivity;
 import com.example.designersconnect.Helpers.FollowOperations;
 import com.example.designersconnect.Models.UserData;
 import com.example.designersconnect.Activities.ProfileActivity;
@@ -47,14 +48,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         UserData user = users.get(position);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(context, ProfileActivity.class);
-                i.putExtra("userId",user.getUserId());
-                context.startActivity(i);
-            }
-        });
         holder.tvsrUsername.setText(user.getUsername());
         holder.tvsrDisplayName.setText(user.getDisplayName());
         RequestOptions requestOptions = new RequestOptions()
@@ -63,11 +56,19 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 .load(user.getProfilePicture())
                 .apply(requestOptions)
                 .into(holder.tvsrProfilePhoto);
-        FollowOperations.followText(holder.btnFollow);
+        FollowOperations.followText(holder.btnFollow, user.getUserId());
         holder.btnFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FollowOperations.follow(holder.btnFollow,user.getUserId());
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, ProfileActivity.class);
+                i.putExtra("userId",user.getUserId());
+                context.startActivity(i);
             }
         });
     }
@@ -81,7 +82,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         public ShapeableImageView tvsrProfilePhoto;
         public TextView tvsrDisplayName;
         public TextView tvsrUsername;
-        public AppCompatButton btnFollow;
+        public AppCompatButton btnFollow, btnMessage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -2,7 +2,6 @@ package com.example.designersconnect.Models;
 
 public class Post {
     private String postId, userId, postPicture, description;
-    private int commentsCounts, likesCounts;
     private long uploadTime;
 
     public Post(String postId, String userId, String postPicture, String description) {
@@ -10,8 +9,6 @@ public class Post {
         this.userId = userId;
         this.postPicture = postPicture;
         this.description = description;
-        this.commentsCounts = 0;
-        this.likesCounts = 0;
         this.uploadTime = System.currentTimeMillis();
     }
 
@@ -32,14 +29,6 @@ public class Post {
 
     public String getDescription() {
         return description;
-    }
-
-    public int getCommentsCounts() {
-        return commentsCounts;
-    }
-
-    public int getLikesCounts() {
-        return likesCounts;
     }
 
     public long getUploadTime() {

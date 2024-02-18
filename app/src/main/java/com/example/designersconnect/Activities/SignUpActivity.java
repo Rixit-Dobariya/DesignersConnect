@@ -54,27 +54,34 @@ public class SignUpActivity extends AppCompatActivity {
         }
         else
         {
-            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
-            usersRef.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        Toast.makeText(SignUpActivity.this, "This username is already taken by another user", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Intent i = new Intent(SignUpActivity.this, SignUpSecondActivity.class);
-                        i.putExtra("email",email);
-                        i.putExtra("displayName",displayName);
-                        i.putExtra("username",username);
-                        i.putExtra("password",password);
+            Intent i = new Intent(getApplicationContext(), SignUpSecondActivity.class);
+            i.putExtra("email",email);
+            i.putExtra("displayName",displayName);
+            i.putExtra("username",username);
+            i.putExtra("password",password);
 
-                        startActivity(i);
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
+            startActivity(i);
+//            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+//            usersRef.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    if (dataSnapshot.exists()) {
+//                        Toast.makeText(SignUpActivity.this, "This username is already taken by another user", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Intent i = new Intent(getApplicationContext(), SignUpSecondActivity.class);
+//                        i.putExtra("email",email);
+//                        i.putExtra("displayName",displayName);
+//                        i.putExtra("username",username);
+//                        i.putExtra("password",password);
+//
+//                        startActivity(i);
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//                }
+//            });
         }
     }
 }

@@ -1,7 +1,15 @@
 package com.example.designersconnect.Models;
 
 public class UserData {
-    String userId, username, displayName, jobTitle, profilePicture;
+    String userId, username, displayName, jobTitle, profilePicture, status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public void setUserId(String userId) {
         this.userId = userId;
@@ -24,13 +32,14 @@ public class UserData {
     }
 
     UserData(){}
-    public UserData(String userId, String username, String displayName, String jobTitle, String profilePicture)
+    public UserData(String userId, String username, String displayName, String jobTitle, String profilePicture, String status)
     {
         this.userId=userId;
         this.username=username;
         this.displayName=displayName;
         this.jobTitle=jobTitle;
         this.profilePicture=profilePicture;
+        this.status = status;
     }
 
     public String getProfilePicture() {

@@ -1,6 +1,7 @@
 package com.example.designersconnect.Adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -11,13 +12,19 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.designersconnect.Fragments.CommentsFragment;
+import com.example.designersconnect.Helpers.CommentsOperation;
+import com.example.designersconnect.Helpers.LikesOperations;
 import com.example.designersconnect.Models.Post;
 import com.example.designersconnect.Models.UserData;
 import com.example.designersconnect.R;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -90,6 +97,23 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 p.show();
             }
         });
+
+        holder.imgLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LikesOperations.like(post.getPostId(), holder.imgLike);
+            }
+        });
+        LikesOperations.isLiked(post.getPostId(), holder.imgLike);
+        LikesOperations.numberOfLikes(post.getPostId(), holder.tvLikes);
+        CommentsOperation.numberOfComments(post.getPostId(), holder.tvComments);
+        holder.imgComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BottomSheetDialogFragment bottomSheetDialogFragment = CommentsFragment.newInstance(post.getPostId());
+                bottomSheetDialogFragment.show(((AppCompatActivity)context).getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+            }
+        });
     }
 
     @Override
@@ -98,9 +122,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvUsername, tvDescription;
+        TextView tvUsername, tvDescription, tvLikes, tvComments;
         ShapeableImageView imgProfilePhoto, imgPost;
-        ImageView imgOptions;
+        ImageView imgOptions, imgLike, imgComment;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -109,6 +133,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             imgProfilePhoto = itemView.findViewById(R.id.imgProfilePhoto);
             imgPost = itemView.findViewById(R.id.imgPost);
             imgOptions = itemView.findViewById(R.id.imgOptions);
+            imgLike = itemView.findViewById(R.id.imgLike);
+            tvLikes = itemView.findViewById(R.id.tvLikes);
+            tvComments = itemView.findViewById(R.id.tvComments);
+            imgComment = itemView.findViewById(R.id.imgComment);
         }
     }
 }

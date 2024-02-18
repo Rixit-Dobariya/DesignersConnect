@@ -13,6 +13,8 @@ import com.example.designersconnect.Models.Message;
 import com.example.designersconnect.R;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
@@ -46,7 +48,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Message message = messageList.get(position);
         holder.tvMessage.setText(message.getMessage());
-        holder.tvTime.setText(message.getTimestamp()+"");
+        holder.tvTime.setText(getTime(message.getTimestamp()));
     }
 
     @Override
@@ -65,6 +67,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         {
             return MSG_TYPE_LEFT;
         }
+    }
+
+    String getTime(long timestamp)
+    {
+        Date date = new Date(timestamp);
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+        return sdf.format(date);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{

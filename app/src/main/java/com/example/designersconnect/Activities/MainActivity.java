@@ -79,4 +79,22 @@ public class MainActivity extends AppCompatActivity {
 
         ft.commit();
     }
+    void setStatus(String status)
+    {
+        String userId = FirebaseAuth.getInstance().getUid();
+        FirebaseDatabase.getInstance().getReference("users").child(userId).child("status").setValue(status);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setStatus("online");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        setStatus("offline");
+    }
 }
