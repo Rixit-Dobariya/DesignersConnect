@@ -48,7 +48,6 @@ public class SignUpSecondActivity extends AppCompatActivity {
         binding.spJobTitles1.setAdapter(arrayAdapter);
 
         mAuth = FirebaseAuth.getInstance();
-        binding.progressbar1.setVisibility(View.GONE);
 
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),

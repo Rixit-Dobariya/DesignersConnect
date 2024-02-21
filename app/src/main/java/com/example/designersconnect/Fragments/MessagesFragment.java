@@ -3,9 +3,11 @@ package com.example.designersconnect.Fragments;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +31,7 @@ import java.util.List;
 public class MessagesFragment extends Fragment {
 
     FragmentMessagesBinding binding;
-    List<UserData> users;
+    List<UserData> users, searchedUsersList;
     List<String> usersList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,30 +40,54 @@ public class MessagesFragment extends Fragment {
 
         users = new ArrayList<>();
         usersList = new ArrayList<>();
+        searchedUsersList = new ArrayList<>();
 
         UserMessageAdapter adapter = new UserMessageAdapter(users,getContext());
         binding.messageItems.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.messageItems.setAdapter(adapter);
-        String userId= FirebaseAuth.getInstance().getUid();
+        String userId = FirebaseAuth.getInstance().getUid();
 
         Query query = FirebaseDatabase.getInstance().getReference("messages");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<String> newUsersList = new ArrayList<>();
+                usersList.clear();
                 for(DataSnapshot userSnapshot : snapshot.getChildren())
                 {
                     Message msg = userSnapshot.getValue(Message.class);
                     if(msg.getReceiver().equals(userId)){
-                        newUsersList.add(msg.getSender());
+                        usersList.add(msg.getSender());
                     }
                     if(msg.getSender().equals(userId)){
-                        newUsersList.add(msg.getReceiver());
+                        usersList.add(msg.getReceiver());
                     }
                 }
 
-                usersList.clear();
-                usersList.addAll(newUsersList);
+                if(usersList.isEmpty())
+                {
+                    binding.tvSuggestions.setVisibility(View.VISIBLE);
+                    FirebaseDatabase.getInstance().getReference("Follow").child(userId).child("following").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.exists())
+                            {
+                                for(DataSnapshot dataSnapshot : snapshot.getChildren())
+                                {
+                                    usersList.add(dataSnapshot.getKey());
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+                if(usersList.isEmpty())
+                {
+                    binding.tvSuggestions.setVisibility(View.GONE);
+                }
                 setUsers(adapter);
             }
 
@@ -70,43 +96,98 @@ public class MessagesFragment extends Fragment {
 
             }
         });
+
+        binding.searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if(binding.searchBar.getQuery().toString().isEmpty())
+                {
+                    binding.rvSearchMessage.setVisibility(View.GONE);
+                    binding.messageItems.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    binding.rvSearchMessage.setVisibility(View.VISIBLE);
+                    binding.messageItems.setVisibility(View.GONE);
+                    searchedUsersList.clear();
+                    for(UserData user: users)
+                    {
+                        if(user.getUsername().toLowerCase().contains(query.toLowerCase()))
+                        {
+                            searchedUsersList.add(user);
+                        }
+                    }
+                    UserMessageAdapter userMessageAdapter = new UserMessageAdapter(searchedUsersList,getContext());
+                    binding.rvSearchMessage.setLayoutManager(new LinearLayoutManager(getContext()));
+                    binding.rvSearchMessage.setAdapter(userMessageAdapter);
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(binding.searchBar.getQuery().toString().isEmpty())
+                {
+                    binding.rvSearchMessage.setVisibility(View.GONE);
+                    binding.messageItems.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    binding.rvSearchMessage.setVisibility(View.VISIBLE);
+                    binding.messageItems.setVisibility(View.GONE);
+                    searchedUsersList.clear();
+                    for(UserData user: users)
+                    {
+                        if(user.getUsername().toLowerCase().contains(newText.toLowerCase()))
+                        {
+                            searchedUsersList.add(user);
+                        }
+                    }
+                    UserMessageAdapter userMessageAdapter = new UserMessageAdapter(searchedUsersList,getContext());
+                    binding.rvSearchMessage.setLayoutManager(new LinearLayoutManager(getContext()));
+                    binding.rvSearchMessage.setAdapter(userMessageAdapter);
+                }
+                return true;
+            }
+        });
         return binding.getRoot();
     }
+
+    //add users using user ids list
     void setUsers(UserMessageAdapter adapter)
     {
         users.clear();
-
         for (String id : usersList) {
-            // Get the user data for each user ID in usersList
-            FirebaseDatabase.getInstance().getReference("users").child(id)
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()) {
-                                UserData user = dataSnapshot.getValue(UserData.class);
-                                boolean exists=false;
-                                for(UserData userData: users)
-                                {
-                                    if(userData.getUserId().equals(user.getUserId()))
+                FirebaseDatabase.getInstance().getReference("users").child(id)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    UserData user = dataSnapshot.getValue(UserData.class);
+                                    boolean exists=false;
+                                    for(UserData userData: users)
                                     {
-                                        exists=true;
-                                        break;
+                                        if(userData.getUserId().equals(user.getUserId()))
+                                        {
+                                            exists=true;
+                                            break;
+                                        }
+                                    }
+                                    if(!exists)
+                                    {
+                                        users.add(user);
                                     }
                                 }
-                                if(!exists)
-                                {
-                                    users.add(user);
-                                }
+                                adapter.notifyDataSetChanged();
                             }
-                            adapter.notifyDataSetChanged();
-                        }
 
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            // Handle the error
-                        }
-                    });
-        }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+            }
     }
+
+
 }

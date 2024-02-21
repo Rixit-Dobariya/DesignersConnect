@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.MessagesFragment">
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="35dp"
+        android:background="@drawable/my_edittext_background"
+        android:elevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11"
+        app:queryHint="Search designers" />
+
     <TextView
         android:id="@+id/textView11"
         style="@style/fragmentHeading"
@@ -19,47 +34,33 @@
 
     <TextView
         android:id="@+id/tvSuggestions"
-        android:fontFamily="@font/montserrat_semi_bold"
-        android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat_semi_bold"
         android:text="Suggestions"
+        android:textSize="16sp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchBar" />
-
-    <AutoCompleteTextView
-        android:id="@+id/searchBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/my_edittext_background"
-        android:elevation="10dp"
-        android:hint="Search designers..."
-        android:paddingStart="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="12dp"
-        android:elevation="10dp"
-        android:src="@drawable/search"
-        app:layout_constraintBottom_toBottomOf="@+id/searchBar"
-        app:layout_constraintStart_toStartOf="@+id/searchBar"
-        app:layout_constraintTop_toTopOf="@+id/searchBar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messageItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSuggestions"
+        tools:listitem="@layout/single_message" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSearchMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

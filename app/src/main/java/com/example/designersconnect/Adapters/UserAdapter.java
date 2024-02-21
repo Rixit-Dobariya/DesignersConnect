@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,16 +35,26 @@ import java.util.List;
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     Context context;
     List<UserData> users;
+    boolean main;
 
-    public UserAdapter(Context context, List<UserData> users) {
+    public UserAdapter(Context context, List<UserData> users, boolean main) {
         this.context = context;
         this.users = users;
+        this.main = main;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.single_search_result_main,parent,false);
+        View view;
+        if(main)
+        {
+            view = LayoutInflater.from(context).inflate(R.layout.single_search_result_main,parent,false);
+        }
+        else
+        {
+            view = LayoutInflater.from(context).inflate(R.layout.single_search_result,parent,false);
+        }
         return new ViewHolder(view);
     }
 
@@ -56,16 +69,35 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 .load(user.getProfilePicture())
                 .apply(requestOptions)
                 .into(holder.tvsrProfilePhoto);
-        FollowOperations.followText(holder.btnFollow, user.getUserId());
-        holder.btnFollow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FollowOperations.follow(holder.btnFollow,user.getUserId());
-            }
-        });
+        if(main)
+        {
+            FollowOperations.followText(holder.btnFollow, user.getUserId());
+            holder.btnFollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FollowOperations.follow(holder.btnFollow,user.getUserId());
+                }
+            });
+        }
+        else
+        {
+            holder.imgDeleteHistory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String userId = FirebaseAuth.getInstance().getUid();
+                    FirebaseDatabase.getInstance().getReference("Search-history").child(userId).child(user.getUserId()).removeValue(new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                            Toast.makeText(context, "Search history removed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                updateSearchHistory(user.getUserId());
                 Intent i = new Intent(context, ProfileActivity.class);
                 i.putExtra("userId",user.getUserId());
                 context.startActivity(i);
@@ -78,10 +110,40 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         return users.size();
     }
 
+    public void updateSearchHistory(String userId)
+    {
+        String selfUserId = FirebaseAuth.getInstance().getUid();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Search-history");
+        databaseReference.child(selfUserId).child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists())
+                {
+                    for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+                        childSnapshot.getRef().removeValue();
+                    }
+                    databaseReference.child(selfUserId).child(userId).setValue(System.currentTimeMillis()+"");
+                }
+                else
+                {
+                    databaseReference.child(selfUserId).child(userId).setValue(System.currentTimeMillis()+"");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+
     class ViewHolder extends RecyclerView.ViewHolder{
         public ShapeableImageView tvsrProfilePhoto;
         public TextView tvsrDisplayName;
         public TextView tvsrUsername;
+        ImageView imgDeleteHistory;
         public AppCompatButton btnFollow, btnMessage;
 
         public ViewHolder(@NonNull View itemView) {
@@ -90,6 +152,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             tvsrDisplayName = itemView.findViewById(R.id.tvsrDisplayName);
             tvsrUsername = itemView.findViewById(R.id.tvsrUsername);
             btnFollow = itemView.findViewById(R.id.btnFollow);
+            imgDeleteHistory = itemView.findViewById(R.id.imgDeleteHistory);
         }
     }
 }

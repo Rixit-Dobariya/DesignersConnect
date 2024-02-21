@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListAdapter;
+import android.widget.Toast;
 
 import com.example.designersconnect.Adapters.UserAdapter;
 import com.example.designersconnect.Models.UserData;
@@ -32,8 +33,8 @@ import java.util.List;
 public class SearchFragment extends Fragment {
 
    FragmentSearchBinding binding;
-   List<UserData> users;
-    UserAdapter userAdapter;
+   List<UserData> users, searchHistoryUsers;
+   UserAdapter userAdapter, searchHistoryAdapter;
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -42,8 +43,19 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentSearchBinding.inflate(inflater,container,false);
+
+        binding.searchBar.setOnClickListener(v -> binding.searchBar.setIconified(false));
+        setSearchHistoryUsers();
+        binding.rvSearchHistory.setVisibility(View.VISIBLE);
+
+        setSearchResults();
+
+        return binding.getRoot();
+    }
+
+    private void setSearchResults() {
         users = new ArrayList<>();
-        userAdapter = new UserAdapter(getActivity(),users);
+        userAdapter = new UserAdapter(getActivity(), users, true);
         binding.rvSearchResults.setAdapter(userAdapter);
         binding.rvSearchResults.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -54,12 +66,14 @@ public class SearchFragment extends Fragment {
                 {
                     users.clear();
                     userAdapter.notifyDataSetChanged();
+                    binding.rvSearchHistory.setVisibility(View.VISIBLE);
                 }
                 else
                 {
                     searchUser(query.toString());
+                    binding.rvSearchHistory.setVisibility(View.GONE);
                 }
-                return false;
+                return true;
             }
             @Override
             public boolean onQueryTextChange(String newText) {
@@ -67,17 +81,58 @@ public class SearchFragment extends Fragment {
                 {
                     users.clear();
                     userAdapter.notifyDataSetChanged();
+                    binding.rvSearchHistory.setVisibility(View.VISIBLE);
                 }
                 else
                 {
                     searchUser(newText.toString());
+                    binding.rvSearchHistory.setVisibility(View.GONE);
                 }
-                return false;
+                return true;
             }
         });
-        return binding.getRoot();
     }
 
+    void setSearchHistoryUsers()
+    {
+        searchHistoryUsers =  new ArrayList<>();
+        searchHistoryAdapter = new UserAdapter(getActivity(),searchHistoryUsers , false);
+        binding.rvSearchHistory.setAdapter(searchHistoryAdapter);
+        binding.rvSearchHistory.setLayoutManager(new LinearLayoutManager(getActivity()));
+        String userId = FirebaseAuth.getInstance().getUid();
+
+        Query query = FirebaseDatabase.getInstance().getReference("Search-history").child(userId);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                searchHistoryUsers.clear();
+                for(DataSnapshot dataSnapshot : snapshot.getChildren())
+                {
+                    String id = dataSnapshot.getKey();
+                    FirebaseDatabase.getInstance().getReference("users").child(id).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.exists())
+                            {
+                                searchHistoryUsers.add(snapshot.getValue(UserData.class));
+                                searchHistoryAdapter.notifyDataSetChanged();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
     void searchUser(String s)
     {
         String userId = FirebaseAuth.getInstance().getUid();

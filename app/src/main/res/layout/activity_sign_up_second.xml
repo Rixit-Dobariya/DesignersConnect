@@ -1,99 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.SignUpSecondActivity">
 
-    <ImageView
-        android:id="@+id/imageProfileInput"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginTop="28dp"
-        android:src="@drawable/baseline_account_circle_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView28" />
-
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="263dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="48dp"
-        android:text="DesignersConnect"
-        style="@style/HeadingStyle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="247dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="45dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:textSize="20sp"
-        android:text="Choose your Job Title"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-    <androidx.appcompat.widget.AppCompatSpinner
-        style="@style/spinnerStyle"
-        android:id="@+id/spJobTitles1"
-        android:layout_marginStart="35dp"
-        android:layout_marginEnd="35dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/spinner_shape"
-        android:layout_marginTop="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imageProfileInput"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_marginTop="28dp"
+            android:src="@drawable/baseline_account_circle_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView28" />
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="263dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="48dp"
+            android:text="DesignersConnect"
+            style="@style/HeadingStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="247dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="45dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="20sp"
+            android:text="Choose your Job Title"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        <androidx.appcompat.widget.AppCompatSpinner
+            style="@style/spinnerStyle"
+            android:id="@+id/spJobTitles1"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/spinner_shape"
+            android:layout_marginTop="28dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnRegister"
+            style="@style/MyButtonStyle"
+            android:layout_width="303dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="148dp"
+            android:text="Continue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.472"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageProfileInput"
+            app:layout_constraintVertical_bias="0.0" />
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="306dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="68dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Choose your Profile Picture"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.485"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spJobTitles1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnRegister"
-        style="@style/MyButtonStyle"
-        android:layout_width="303dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="148dp"
-        android:text="Continue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageProfileInput" />
 
-    <ProgressBar
-        android:id="@+id/progressbar1"
-
-        android:layout_width="202dp"
-        android:layout_height="57dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.627" />
-
-    <TextView
-        android:id="@+id/textView28"
-        android:layout_width="306dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="68dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Choose your Profile Picture"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.485"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spJobTitles1" />
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

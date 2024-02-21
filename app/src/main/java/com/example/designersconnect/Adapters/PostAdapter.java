@@ -39,6 +39,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private List<Post> postList;
     private Context context;
     private DatabaseReference usersReference;
+    enum PAGE_TYPE{
+        HOME_FRAGMENT, POSTS_ACTIVITY, MY_POSTS_ACTIVITY
+    }
+    PAGE_TYPE pageType;
 
     public PostAdapter(List<Post> postList, Context context) {
         this.postList = postList;

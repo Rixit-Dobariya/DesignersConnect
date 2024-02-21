@@ -80,10 +80,10 @@ public class HomeFragment extends Fragment {
                         if(id.equals(post.getUserId()))
                         {
                             postsList.add(post);
+                            adapter.notifyDataSetChanged();
                         }
                     }
                 }
-                adapter.notifyDataSetChanged();
             }
 
             @Override
