@@ -1,6 +1,7 @@
 package com.example.designersconnect.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,8 +53,6 @@ public class ChatActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-
 
         databaseReference.child("users").child(receiver).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -114,8 +114,9 @@ public class ChatActivity extends AppCompatActivity {
     void sendMessage(String messageText,String receiver){
 
         String userId = FirebaseAuth.getInstance().getUid();
-        Message message = new Message(messageText, userId, receiver);
-        databaseReference.child("messages").push().setValue(message).addOnCompleteListener(new OnCompleteListener<Void>() {
+        String messageId = databaseReference.child("messages").push().getKey();
+        Message message = new Message(messageText, userId, receiver, messageId);
+        databaseReference.child("messages").child(messageId).setValue(message).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(ChatActivity.this, "Message sent!", Toast.LENGTH_SHORT).show();

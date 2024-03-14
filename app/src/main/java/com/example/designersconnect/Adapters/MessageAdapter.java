@@ -1,17 +1,28 @@
 package com.example.designersconnect.Adapters;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.designersconnect.Activities.SignUpSecondActivity;
+import com.example.designersconnect.Helpers.CommentsOperation;
+import com.example.designersconnect.Helpers.MessageOperations;
 import com.example.designersconnect.Models.Message;
 import com.example.designersconnect.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,6 +34,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public static final int MSG_TYPE_LEFT=0;
     public static final int MSG_TYPE_RIGHT=1;
 
+//    FirebaseDatabase.getInstance().getReference("messsages").child(message.getMessageId()).removeValue();
+//    Toast.makeText(context, "Message successfully deleted!", Toast.LENGTH_SHORT).show();
+//
 
     public MessageAdapter(List<Message> messageList, Context context) {
         this.messageList = messageList;
@@ -49,6 +63,32 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         Message message = messageList.get(position);
         holder.tvMessage.setText(message.getMessage());
         holder.tvTime.setText(getTime(message.getTimestamp()));
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                String userId = FirebaseAuth.getInstance().getUid();
+                if(message.getSender()==userId)
+                {
+                    AlertDialog dialog = new AlertDialog.Builder(context).create();
+                    dialog.setMessage("Do you want to delete this message?");
+                    dialog.setButton(Dialog.BUTTON_NEGATIVE,"No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.setButton(Dialog.BUTTON_POSITIVE,"Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            MessageOperations.deleteMessage(message.getMessageId());
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
+                }
+                return true;
+            }
+        });
     }
 
     @Override
