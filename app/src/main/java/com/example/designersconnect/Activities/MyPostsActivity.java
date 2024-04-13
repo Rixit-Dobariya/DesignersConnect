@@ -41,7 +41,7 @@ public class MyPostsActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         Query query = databaseReference.child("posts").orderByChild("userId").equalTo(FirebaseAuth.getInstance().getUid());
         posts = new ArrayList<>();
-        postAdapter = new PostAdapter(posts,getApplicationContext());
+        postAdapter = new PostAdapter(posts,getApplicationContext(), PostAdapter.PAGE_TYPE.MY_POSTS_ACTIVITY);
         binding.rvAllPosts.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         binding.rvAllPosts.setAdapter(postAdapter);
         query.addValueEventListener(new ValueEventListener() {

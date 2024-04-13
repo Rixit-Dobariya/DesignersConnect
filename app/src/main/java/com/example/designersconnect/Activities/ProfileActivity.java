@@ -70,6 +70,16 @@ public class ProfileActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        binding.followersInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), FollowersActivity.class);
+                i.putExtra("userId", userId);
+                startActivity(i);
+            }
+        });
+
         setPosts();
 
     }

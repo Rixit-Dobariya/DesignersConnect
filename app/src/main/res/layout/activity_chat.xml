@@ -11,47 +11,54 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/custom_toolbar_layout" />
+        layout="@layout/custom_toolbar_layout"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMessages"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/etMessage"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:listitem="@layout/message_layout_left"
-        />
-
-    <ImageView
-        android:id="@+id/imgEmoji"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="12dp"
-        android:src="@drawable/emoji"
-        app:layout_constraintBottom_toBottomOf="@+id/etMessage"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/etMessage" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btnSendMessage"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="24dp"
-        android:src="@drawable/send"
-        app:layout_constraintBottom_toBottomOf="@+id/etMessage"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/etMessage" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        tools:listitem="@layout/message_layout_left" />
 
-    <EditText
-        android:id="@+id/etMessage"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/my_edittext_background"
-        android:hint="Type a message..."
+        android:background="@color/white"
+        android:layout_marginHorizontal="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnSendMessage"
-        app:layout_constraintStart_toEndOf="@+id/imgEmoji" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/etMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/message_textbox"
+            android:hint="Type a message..."
+            android:paddingRight="33dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnSendMessage"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/send"
+            android:layout_marginRight="3dp"
+            app:layout_constraintBottom_toBottomOf="@+id/etMessage"
+            app:layout_constraintEnd_toEndOf="@+id/etMessage"
+            app:layout_constraintTop_toTopOf="@+id/etMessage" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

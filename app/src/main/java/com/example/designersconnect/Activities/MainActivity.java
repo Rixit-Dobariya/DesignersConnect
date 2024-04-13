@@ -82,8 +82,9 @@ public class MainActivity extends AppCompatActivity {
     void setStatus(String status)
     {
         String userId = FirebaseAuth.getInstance().getUid();
-        FirebaseDatabase.getInstance().getReference("users").child(userId).child("status").setValue(status);
-
+        if(userId!=null) {
+            FirebaseDatabase.getInstance().getReference("users").child(userId).child("status").setValue(status);
+        }
     }
 
     @Override

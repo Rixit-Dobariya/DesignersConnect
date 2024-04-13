@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.designersconnect.Adapters.MessageAdapter;
 import com.example.designersconnect.Models.Message;
 import com.example.designersconnect.Models.UserData;
@@ -21,6 +23,7 @@ import com.example.designersconnect.R;
 import com.example.designersconnect.databinding.ActivityChatBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,8 +66,28 @@ public class ChatActivity extends AppCompatActivity {
                     if(user!=null)
                     {
                         TextView tvUsername = findViewById(R.id.tvUsername);
-                        TextView tvStatus = findViewById(R.id.tvStatus);
                         tvUsername.setText(user.getUsername());
+
+                        TextView tvStatus = findViewById(R.id.tvStatus);
+                        tvStatus.setText(user.getStatus());
+
+                        ShapeableImageView imageView = findViewById(R.id.imgProfilePhoto);
+                        Glide.with(getApplicationContext())
+                                .load(user.getProfilePicture())
+                                .apply(new RequestOptions().circleCrop())
+                                .into(imageView);
+
+                        ImageView backButton = findViewById(R.id.imgBackButton);
+                        backButton.setOnClickListener(v->{
+                            onBackPressed();
+                        });
+
+                        View view = findViewById(R.id.include);
+                        view.setOnClickListener(v -> {
+                            Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                            intent.putExtra("userId",user.getUserId());
+                            startActivity(intent);
+                        });
                     }
                 }
             }

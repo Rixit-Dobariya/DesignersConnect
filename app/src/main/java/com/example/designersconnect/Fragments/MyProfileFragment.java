@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.designersconnect.Activities.FollowersActivity;
 import com.example.designersconnect.Activities.SettingsActivity;
 import com.example.designersconnect.Adapters.PhotoAdapter;
 import com.example.designersconnect.Activities.EditProfileActivity;
@@ -34,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MyProfileFragment extends Fragment {
 
@@ -71,7 +73,14 @@ public class MyProfileFragment extends Fragment {
         setProfileData();
         setPosts();
 
-
+        binding.followersInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i =new Intent(getContext(), FollowersActivity.class);
+                i.putExtra("userId", uid);
+                startActivity(i);
+            }
+        });
         binding.btnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,10 +139,13 @@ public class MyProfileFragment extends Fragment {
                     binding.followersInfo.setText("0 Followers | 0 Following");
                     RequestOptions requestOptions = new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL);
-                    Glide.with(getActivity())
-                            .load(data.getProfilePicture())
-                            .apply(requestOptions)
-                            .into(binding.imgProfilePhoto);
+                    if (getContext() != null && data.getProfilePicture() != null) {
+                        Glide.with(getContext())
+                                .load(data.getProfilePicture())
+                                .apply(requestOptions)
+                                .into(binding.imgProfilePhoto);
+                    }
+
                     customDialog.dismiss();
                 }
                 else

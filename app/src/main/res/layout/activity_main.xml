@@ -14,7 +14,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_view" />
+        app:menu="@menu/bottom_nav_view"
+        app:itemIconTint="@color/menu_color_state_list"
+        app:itemTextColor="@color/black"
+        />
 
     <FrameLayout
         android:id="@+id/container"

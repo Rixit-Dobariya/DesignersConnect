@@ -31,7 +31,6 @@ import java.util.List;
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
     List<Message> messageList;
     Context context;
-
     public static final int MSG_TYPE_LEFT=0;
     public static final int MSG_TYPE_RIGHT=1;
 
@@ -63,34 +62,24 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Message message = messageList.get(position);
         holder.tvMessage.setText(message.getMessage());
-        holder.tvTime.setText(getTime(message.getTimestamp()));
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                String userId = FirebaseAuth.getInstance().getUid();
-                if(message.getSender()==userId)
-                {
+//        holder.tvTime.setText(getTime(message.getTimestamp()));
+        String userId = FirebaseAuth.getInstance().getUid();
+        if(message.getSender().equals(userId)){
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
                     AlertDialog dialog = new AlertDialog.Builder(context).create();
                     dialog.setMessage("Do you want to delete this message?");
-                    dialog.setButton(Dialog.BUTTON_NEGATIVE,"No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    dialog.setButton(Dialog.BUTTON_POSITIVE,"Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            MessageOperations.deleteMessage(message.getMessageId());
-                            dialog.dismiss();
-                        }
+                    dialog.setButton(Dialog.BUTTON_NEGATIVE,"No", (dialog1, which) -> dialog1.dismiss());
+                    dialog.setButton(Dialog.BUTTON_POSITIVE,"Yes", (dialog12, which) -> {
+                        MessageOperations.deleteMessage(message.getMessageId());
+                        dialog12.dismiss();
                     });
                     dialog.show();
+                    return true;
                 }
-                return true;
-            }
-        });
-        //delete message
+            });
+        }
     }
 
     @Override
@@ -111,12 +100,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         }
     }
 
-    String getTime(long timestamp)
-    {
-        Date date = new Date(timestamp);
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
-        return sdf.format(date);
-    }
+//    String getTime(long timestamp)
+//    {
+//        Date date = new Date(timestamp);
+//        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+//        return sdf.format(date);
+//    }
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -124,7 +113,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvMessage = itemView.findViewById(R.id.tvMessage);
-            tvTime = itemView.findViewById(R.id.tvTime);
+//            tvTime = itemView.findViewById(R.id.tvTime);
         }
     }
 }

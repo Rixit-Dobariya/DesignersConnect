@@ -20,20 +20,23 @@ public class FollowOperations {
         selfUserId = FirebaseAuth.getInstance().getUid();
     }
     public static void followText(AppCompatButton btnFollow, String userId){
-        databaseReference.child("Follow").child(selfUserId).child("following").child(userId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists())
-                    btnFollow.setText("Following");
-                else
-                    btnFollow.setText("Follow");
-            }
+        if(selfUserId!=null && userId!=null)
+        {
+            databaseReference.child("Follow").child(selfUserId).child("following").child(userId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists())
+                        btnFollow.setText("Following");
+                    else
+                        btnFollow.setText("Follow");
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+        }
     }
     public static void follow(AppCompatButton btnFollow, String userId){
         if(btnFollow.getText().toString().equals("Follow"))

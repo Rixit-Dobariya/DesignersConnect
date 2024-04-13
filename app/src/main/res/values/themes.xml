@@ -29,6 +29,11 @@
         <item name="android:fontFamily">@font/montserrat_bold</item>
     </style>
 
+    <style name="menuStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:color">@color/black</item>
+
+    </style>
+
     <style name="MyButtonStyleWithStroke" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/sign_out</item>
         <item name="android:textColor">@android:color/black</item>

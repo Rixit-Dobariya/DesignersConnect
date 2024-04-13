@@ -41,11 +41,9 @@ public class UserMessageAdapter extends RecyclerView.Adapter<UserMessageAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         UserData user = users.get(position);
         holder.tvUsername.setText(user.getUsername());
-        RequestOptions requestOptions = new RequestOptions()
-                .diskCacheStrategy(DiskCacheStrategy.ALL);
         Glide.with(context)
                 .load(user.getProfilePicture())
-                .apply(requestOptions)
+                .apply(new RequestOptions().circleCrop())
                 .into(holder.imgProfilePhoto);
         holder.itemView.setOnClickListener(v->{
             Intent i = new Intent(context, ChatActivity.class);

@@ -43,7 +43,7 @@ public class HomeFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         postsList = new ArrayList<>();
-        adapter = new PostAdapter(postsList, getContext());
+        adapter = new PostAdapter(postsList, getContext(), PostAdapter.PAGE_TYPE.HOME_FRAGMENT);
         binding.rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvPosts.setAdapter(adapter);
 
