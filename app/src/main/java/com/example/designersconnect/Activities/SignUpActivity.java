@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
 import com.example.designersconnect.databinding.ActivitySignUpBinding;
@@ -36,6 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+
     }
     void sendData()
     {
@@ -44,7 +46,23 @@ public class SignUpActivity extends AppCompatActivity {
         String displayName = binding.etDisplayName.getText().toString();
         String username = binding.etUsername.getText().toString();
 
-        if(username.contains(" "))
+        if(displayName.isEmpty())
+        {
+            Toast.makeText(this, "Display nae cannot be empty!", Toast.LENGTH_SHORT).show();
+        }
+        else if(username.isEmpty())
+        {
+            Toast.makeText(this, "Username cannot be empty!", Toast.LENGTH_SHORT).show();
+        }
+        else if(email.isEmpty())
+        {
+            Toast.makeText(this, "Email cannot be empty!", Toast.LENGTH_SHORT).show();
+        }
+        else if(password.isEmpty())
+        {
+            Toast.makeText(this, "Password cannot be empty!", Toast.LENGTH_SHORT).show();
+        }
+        else if(username.contains(" "))
         {
             Toast.makeText(this, "Username cannot contain whitespace", Toast.LENGTH_SHORT).show();
         }

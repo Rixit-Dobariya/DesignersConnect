@@ -14,9 +14,17 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.designersconnect.Activities.ChatActivity;
+import com.example.designersconnect.Models.Message;
 import com.example.designersconnect.Models.UserData;
 import com.example.designersconnect.R;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -50,6 +58,41 @@ public class UserMessageAdapter extends RecyclerView.Adapter<UserMessageAdapter.
             i.putExtra("userId",user.getUserId());
             context.startActivity(i);
         });
+        holder.tvTime.setVisibility(View.GONE);
+
+        Query query = FirebaseDatabase.getInstance().getReference("messages").orderByChild("timestamp");
+        String userId = FirebaseAuth.getInstance().getUid();
+        final boolean[] msg = {false};
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                        Message message = messageSnapshot.getValue(Message.class);
+                        if(message.getSender().equals(userId) && message.getReceiver().equals(user.getUserId())){
+                            holder.tvMessage.setText(String.format("You sent: \"%s\"",message.getMessage()));
+                            msg[0] = true;
+                        }
+                        if(message.getSender().equals(user.getUserId()) && message.getReceiver().equals(userId)){
+                            holder.tvMessage.setText(String.format("%s sent: \"%s\"",user.getUsername(),message.getMessage()));
+                            msg[0] = true;
+                        }
+                    }
+                } else {
+                    System.out.println("No messages found.");
+                }
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                System.out.println("Error retrieving messages: " + databaseError.getMessage());
+            }
+        });
+
+        if(!msg[0]){
+            holder.tvMessage.setText("Start chat");
+        }
     }
 
     @Override

@@ -31,6 +31,7 @@ public class FollowersActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         databaseReference = FirebaseDatabase.getInstance().getReference();
         String userId = getIntent().getStringExtra("userId");
+        binding.imageView2.setOnClickListener(v->onBackPressed());
         databaseReference.child("users").child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

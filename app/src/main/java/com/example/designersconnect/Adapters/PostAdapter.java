@@ -107,6 +107,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                             {
                                 FirebaseDatabase.getInstance().getReference("posts").child(post.getPostId()).removeValue();
                                 Toast.makeText(context, "Post successfully deleted!", Toast.LENGTH_SHORT).show();
+                                notifyDataSetChanged();
                             }
                             return true;
                         }

@@ -10,10 +10,11 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="60dp"
         android:text="Welcome!"
         android:theme="@style/HeadingStyle"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,6 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <EditText
+        android:inputType="textEmailAddress"
         android:id="@+id/etEmail"
         style="@style/MyEditTextStyle"
         android:layout_width="match_parent"
@@ -84,6 +86,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
     <EditText
+        android:inputType="textPassword"
         android:id="@+id/etPassword"
         style="@style/MyEditTextStyle"
         android:layout_width="match_parent"
@@ -97,6 +100,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etEmail" />
 
     <TextView
+        android:visibility="gone"
         android:textStyle="italic"
         android:id="@+id/textView5"
         style="@style/MyTextViewStyle"
@@ -109,6 +113,7 @@
         app:layout_constraintTop_toBottomOf="@+id/button1" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:visibility="gone"
         android:id="@+id/btnGoogle"
         style="@style/MyButtonStyleWithStroke"
         android:layout_width="match_parent"

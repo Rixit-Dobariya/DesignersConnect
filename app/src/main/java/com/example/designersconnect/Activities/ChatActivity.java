@@ -1,16 +1,21 @@
 package com.example.designersconnect.Activities;
 
+import static com.example.designersconnect.Helpers.MessageOperations.*;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,8 +59,24 @@ public class ChatActivity extends AppCompatActivity {
         receiver = i.getStringExtra("userId");
         userId = FirebaseAuth.getInstance().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        ImageView imgOptions = findViewById(R.id.imgOptions);
+        imgOptions.setOnClickListener(v->{
+            PopupMenu popupMenu = new PopupMenu(getApplicationContext(), v);
+            popupMenu.getMenuInflater().inflate(R.menu.popup_menu_delete, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    clearChat(receiver, userId);
+                    return true;
+                }
+
+            });
+
+            popupMenu.show();
+        });
+
 
         databaseReference.child("users").child(receiver).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -68,8 +89,8 @@ public class ChatActivity extends AppCompatActivity {
                         TextView tvUsername = findViewById(R.id.tvUsername);
                         tvUsername.setText(user.getUsername());
 
-                        TextView tvStatus = findViewById(R.id.tvStatus);
-                        tvStatus.setText(user.getStatus());
+//                        TextView tvStatus = findViewById(R.id.tvStatus);
+//                        tvStatus.setText(user.getStatus());
 
                         ShapeableImageView imageView = findViewById(R.id.imgProfilePhoto);
                         Glide.with(getApplicationContext())
@@ -146,4 +167,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

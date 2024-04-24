@@ -23,7 +23,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            android:padding="5dp"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="20dp"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView

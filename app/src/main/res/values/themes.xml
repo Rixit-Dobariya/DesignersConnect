@@ -34,6 +34,11 @@
 
     </style>
 
+    <style name="CustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabTextColor">@color/black</item>
+        <item name="tabBackground">@color/white</item>
+    </style>
+
     <style name="MyButtonStyleWithStroke" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/sign_out</item>
         <item name="android:textColor">@android:color/black</item>

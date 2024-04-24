@@ -39,6 +39,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
 
+        binding.processBar.setVisibility(View.VISIBLE);
         String userId = FirebaseAuth.getInstance().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -84,6 +85,7 @@ public class HomeFragment extends Fragment {
                         }
                     }
                 }
+                binding.processBar.setVisibility(View.GONE);
             }
 
             @Override

@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.designersconnect.Models.UserData;
@@ -76,11 +77,8 @@ public class SignUpSecondActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
+                binding.btnRegister2.setVisibility(View.VISIBLE);
 
-//                customDialog = new Dialog(getApplicationContext());
-//                customDialog.setContentView(R.layout.process);
-//                customDialog.setCancelable(false);
-//                customDialog.show();
                 Intent i = getIntent();
                 email = i.getStringExtra("email");
                 password = i.getStringExtra("password");
@@ -105,7 +103,7 @@ public class SignUpSecondActivity extends AppCompatActivity {
                                 else
                                 {
                                     Toast.makeText(SignUpSecondActivity.this, "not done", Toast.LENGTH_SHORT).show();
-//                                    customDialog.dismiss();
+                                    binding.btnRegister2.setVisibility(View.GONE);
                                 }
                             }
                         });
@@ -119,8 +117,8 @@ public class SignUpSecondActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
-//        customDialog.dismiss();
                 startActivity(i);
+                binding.btnRegister2.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
                 finish();
             }
@@ -146,16 +144,19 @@ public class SignUpSecondActivity extends AppCompatActivity {
                                             updateProfilePictureInDatabase();
                                         } else {
                                             Toast.makeText(SignUpSecondActivity.this, "Failed to get download URL", Toast.LENGTH_SHORT).show();
+                                            binding.btnRegister2.setVisibility(View.GONE);
                                         }
                                     }
                                 });
                             } else {
                                 Toast.makeText(SignUpSecondActivity.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
+                                binding.btnRegister2.setVisibility(View.GONE);
                             }
                         }
                     });
         } else {
             Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
+            binding.btnRegister2.setVisibility(View.GONE);
         }
     }
 }

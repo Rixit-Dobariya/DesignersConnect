@@ -44,36 +44,26 @@
             app:layout_constraintTop_toBottomOf="@+id/view"
             tools:listitem="@layout/single_comment_layout" />
 
-        <ImageView
-            android:id="@+id/imgEmoji"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/emoji"
-            app:layout_constraintBottom_toBottomOf="@+id/etComment"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/etComment" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btnAddComment"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="24dp"
-            android:src="@drawable/send"
-            app:layout_constraintBottom_toBottomOf="@+id/etComment"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/etComment" />
-
         <EditText
             android:id="@+id/etComment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/my_edittext_background"
-            android:hint="Type a comment..."
+            android:background="@drawable/message_textbox"
+            android:hint="Type a message..."
+            android:paddingRight="33dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnAddComment"
-            app:layout_constraintStart_toEndOf="@+id/imgEmoji" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnAddComment"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/send"
+            android:layout_marginRight="3dp"
+            app:layout_constraintBottom_toBottomOf="@+id/etComment"
+            app:layout_constraintEnd_toEndOf="@+id/etComment"
+            app:layout_constraintTop_toTopOf="@+id/etComment" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

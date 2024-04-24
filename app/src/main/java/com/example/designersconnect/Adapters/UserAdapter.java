@@ -63,6 +63,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         UserData user = users.get(position);
         holder.tvsrUsername.setText(user.getUsername());
         holder.tvsrDisplayName.setText(user.getDisplayName());
+
         RequestOptions requestOptions = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
         Glide.with(context)
@@ -89,6 +90,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                         @Override
                         public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                             Toast.makeText(context, "Search history removed", Toast.LENGTH_SHORT).show();
+                            notifyDataSetChanged();
                         }
                     });
                 }

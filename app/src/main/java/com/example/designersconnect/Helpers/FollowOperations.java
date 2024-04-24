@@ -54,4 +54,30 @@ public class FollowOperations {
                     .child("followers").child(selfUserId).removeValue();
         }
     }
+    public static String getString(String userId){
+        final String[] str = {""};
+        databaseReference.child("Follow").child(selfUserId).child("followers").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                str[0] = snapshot.getChildrenCount()+"followers |";
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        databaseReference.child("Follow").child(selfUserId).child("following").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                str[0] = snapshot.getChildrenCount()+"following";
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return "Followers and Following";
+    }
 }

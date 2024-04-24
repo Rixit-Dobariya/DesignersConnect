@@ -19,6 +19,7 @@ public class WelcomeActivity extends AppCompatActivity {
         binding.button.setOnClickListener(v ->
         {
             startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
+            finish();
         }
         );
     }

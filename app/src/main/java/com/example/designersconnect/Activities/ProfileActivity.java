@@ -55,6 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
                 FollowOperations.follow(binding.btnProfileFollow,userId);
             }
         });
+        binding.followersInfo.setText(FollowOperations.getString(userId));
         setProfileData();
         binding.btnMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +121,7 @@ public class ProfileActivity extends AppCompatActivity {
                     binding.myProfile.setText(data.getDisplayName());
                     binding.tvUsername.setText(data.getUsername());
                     binding.btnJobTitle.setText(data.getJobTitle());
-                    binding.followersInfo.setText("0 Followers | 0 Following");
+                    binding.followersInfo.setText("Followers and following");
                     RequestOptions requestOptions = new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL);
                     Glide.with(getApplicationContext())

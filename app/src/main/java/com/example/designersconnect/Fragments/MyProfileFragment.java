@@ -136,7 +136,7 @@ public class MyProfileFragment extends Fragment {
                     binding.tvDisplayName.setText(data.getDisplayName());
                     binding.tvUsername.setText(data.getUsername());
                     binding.btnJobTitle.setText(data.getJobTitle());
-                    binding.followersInfo.setText("0 Followers | 0 Following");
+                    binding.followersInfo.setText("Followers and following");
                     RequestOptions requestOptions = new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL);
                     if (getContext() != null && data.getProfilePicture() != null) {

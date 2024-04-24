@@ -9,6 +9,7 @@ import android.os.Handler;
 import com.example.designersconnect.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -22,17 +23,17 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 FirebaseUser currentUser = mAuth.getCurrentUser();
+                FirebaseDatabase.getInstance().getReference().keepSynced(true);
+                Intent i;
                 if(currentUser != null){
-                    Intent i = new Intent(SplashActivity.this, MainActivity.class);
-                    startActivity(i);
-                    finish();
+                    i = new Intent(SplashActivity.this, MainActivity.class);
                 }
                 else
                 {
-                    Intent i = new Intent(SplashActivity.this, WelcomeActivity.class);
-                    startActivity(i);
-                    finish();
+                    i = new Intent(SplashActivity.this, WelcomeActivity.class);
                 }
+                startActivity(i);
+                finish();
             }
         }, 3000);
     }

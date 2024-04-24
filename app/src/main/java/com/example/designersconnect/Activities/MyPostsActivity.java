@@ -44,6 +44,7 @@ public class MyPostsActivity extends AppCompatActivity {
         postAdapter = new PostAdapter(posts,getApplicationContext(), PostAdapter.PAGE_TYPE.MY_POSTS_ACTIVITY);
         binding.rvAllPosts.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         binding.rvAllPosts.setAdapter(postAdapter);
+        binding.imageView4.setOnClickListener(v->onBackPressed());
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
