@@ -62,7 +62,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Message message = messageList.get(position);
         holder.tvMessage.setText(message.getMessage());
-//        holder.tvTime.setText(getTime(message.getTimestamp()));
+        holder.tvTime.setText(getTime(message.getTimestamp()));
         String userId = FirebaseAuth.getInstance().getUid();
         if(message.getSender().equals(userId)){
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -100,12 +100,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         }
     }
 
-//    String getTime(long timestamp)
-//    {
-//        Date date = new Date(timestamp);
-//        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
-//        return sdf.format(date);
-//    }
+    String getTime(long timestamp)
+    {
+        Date date = new Date(timestamp);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
+        return sdf.format(date);
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -113,7 +113,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvMessage = itemView.findViewById(R.id.tvMessage);
-//            tvTime = itemView.findViewById(R.id.tvTime);
+            tvTime = itemView.findViewById(R.id.tvTime);
         }
     }
 }

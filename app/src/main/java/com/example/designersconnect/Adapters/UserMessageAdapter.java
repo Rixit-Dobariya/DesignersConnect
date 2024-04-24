@@ -26,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class UserMessageAdapter extends RecyclerView.Adapter<UserMessageAdapter.ViewHolder> {
@@ -58,8 +60,7 @@ public class UserMessageAdapter extends RecyclerView.Adapter<UserMessageAdapter.
             i.putExtra("userId",user.getUserId());
             context.startActivity(i);
         });
-        holder.tvTime.setVisibility(View.GONE);
-
+//        holder.tvTime.setVisibility(View.GONE);
         Query query = FirebaseDatabase.getInstance().getReference("messages").orderByChild("timestamp");
         String userId = FirebaseAuth.getInstance().getUid();
         final boolean[] msg = {false};
@@ -72,10 +73,12 @@ public class UserMessageAdapter extends RecyclerView.Adapter<UserMessageAdapter.
                         if(message.getSender().equals(userId) && message.getReceiver().equals(user.getUserId())){
                             holder.tvMessage.setText(String.format("You sent: \"%s\"",message.getMessage()));
                             msg[0] = true;
+                            holder.tvTime.setText(getTimeAgo(message.getTimestamp()));
                         }
                         if(message.getSender().equals(user.getUserId()) && message.getReceiver().equals(userId)){
                             holder.tvMessage.setText(String.format("%s sent: \"%s\"",user.getUsername(),message.getMessage()));
                             msg[0] = true;
+                            holder.tvTime.setText(getTimeAgo(message.getTimestamp()));
                         }
                     }
                 } else {
@@ -92,6 +95,31 @@ public class UserMessageAdapter extends RecyclerView.Adapter<UserMessageAdapter.
 
         if(!msg[0]){
             holder.tvMessage.setText("Start chat");
+        }
+    }
+
+    public String getTimeAgo(long timestamp) {
+        long currentTime = System.currentTimeMillis();
+        long timeDifference = currentTime - timestamp;
+
+        if (timeDifference < 0) {
+            return "In the future";
+        } else if (timeDifference < 1000) {
+            return "Just now";
+        } else if (timeDifference < 60 * 1000) {
+            long seconds = timeDifference / 1000;
+            return seconds + " seconds ago";
+        } else if (timeDifference < 60 * 60 * 1000) {
+            long minutes = timeDifference / (60 * 1000);
+            return minutes + " minutes ago";
+        } else if (timeDifference < 24 * 60 * 60 * 1000) {
+            long hours = timeDifference / (60 * 60 * 1000);
+            return hours + " hours ago";
+        } else {
+            Date date = new Date(timestamp);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            String formattedDate = sdf.format(date);
+            return formattedDate;
         }
     }
 
