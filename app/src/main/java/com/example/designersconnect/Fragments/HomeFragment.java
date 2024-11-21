@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment {
     List<String> followingList;
     List<Post> postsList;
     DatabaseReference databaseReference;
-    PostAdapter adapter;
+    String userId;
     public HomeFragment() {
 
     }
@@ -40,14 +40,10 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
 
         binding.processBar.setVisibility(View.VISIBLE);
-        String userId = FirebaseAuth.getInstance().getUid();
+        userId = FirebaseAuth.getInstance().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        postsList = new ArrayList<>();
-        adapter = new PostAdapter(postsList, getContext(), PostAdapter.PAGE_TYPE.HOME_FRAGMENT);
-        binding.rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.rvPosts.setAdapter(adapter);
-
+        binding.tvSuggestions.setVisibility(View.GONE);
         followingList = new ArrayList<>();
         databaseReference.child("Follow").child(userId).child("following").addValueEventListener(new ValueEventListener() {
             @Override
@@ -65,10 +61,15 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
         return binding.getRoot();
     }
     void fetchPosts()
     {
+        postsList = new ArrayList<>();
+        PostAdapter adapter = new PostAdapter(postsList, getContext(), PostAdapter.PAGE_TYPE.HOME_FRAGMENT);
+        binding.rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvPosts.setAdapter(adapter);
         databaseReference.child("posts").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -81,10 +82,37 @@ public class HomeFragment extends Fragment {
                         if(id.equals(post.getUserId()))
                         {
                             postsList.add(post);
-                            adapter.notifyDataSetChanged();
                         }
                     }
                 }
+                adapter.notifyDataSetChanged();
+                fetchOtherPosts();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    void fetchOtherPosts()
+    {
+        postsList = new ArrayList<>();
+        PostAdapter adapter = new PostAdapter(postsList, getContext(), PostAdapter.PAGE_TYPE.HOME_FRAGMENT);
+        binding.rvOtherPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvOtherPosts.setAdapter(adapter);
+        databaseReference.child("posts").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                postsList.clear();
+                for(DataSnapshot dataSnapshot: snapshot.getChildren())
+                {
+                    Post post = dataSnapshot.getValue(Post.class);
+                    if(!followingList.contains(post.getUserId()) && !post.getUserId().equals(userId)){
+                        postsList.add(post);
+                    }
+                }
+                adapter.notifyDataSetChanged();
                 binding.processBar.setVisibility(View.GONE);
             }
 

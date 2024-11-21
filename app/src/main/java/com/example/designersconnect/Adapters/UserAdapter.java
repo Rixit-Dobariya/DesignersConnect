@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.designersconnect.Activities.ChatActivity;
+import com.example.designersconnect.Activities.MainActivity;
 import com.example.designersconnect.Helpers.FollowOperations;
 import com.example.designersconnect.Models.UserData;
 import com.example.designersconnect.Activities.ProfileActivity;
@@ -60,6 +61,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        String userId = FirebaseAuth.getInstance().getUid();
         UserData user = users.get(position);
         holder.tvsrUsername.setText(user.getUsername());
         holder.tvsrDisplayName.setText(user.getDisplayName());
@@ -68,10 +70,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
         Glide.with(context)
                 .load(user.getProfilePicture())
-                .apply(requestOptions)
+                .apply(requestOptions.centerCrop())
                 .into(holder.tvsrProfilePhoto);
         if(main)
         {
+            if(user.getUserId().equals(userId)){
+                holder.btnFollow.setVisibility(View.GONE);
+            }
             FollowOperations.followText(holder.btnFollow, user.getUserId());
             holder.btnFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -85,7 +90,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             holder.imgDeleteHistory.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String userId = FirebaseAuth.getInstance().getUid();
                     FirebaseDatabase.getInstance().getReference("Search-history").child(userId).child(user.getUserId()).removeValue(new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
@@ -99,10 +103,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateSearchHistory(user.getUserId());
-                Intent i = new Intent(context, ProfileActivity.class);
-                i.putExtra("userId",user.getUserId());
-                context.startActivity(i);
+                if(user.getUserId().equals(userId)){
+                    Intent i = new Intent(context, MainActivity.class);
+                    i.putExtra("fragment",5);
+                    context.startActivity(i);
+                }
+                else{
+                    updateSearchHistory(user.getUserId());
+                    Intent i = new Intent(context, ProfileActivity.class);
+                    i.putExtra("userId",user.getUserId());
+                    context.startActivity(i);
+                }
             }
         });
     }

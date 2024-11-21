@@ -11,7 +11,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/image_view"
-        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/RoundedImageView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -45,6 +45,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnFollow"
         style="@style/MyButtonStyle"
+        android:textSize="11sp"
         android:fontFamily="@font/montserrat_semi_bold"
         android:textColor="@color/white"
         android:background="@drawable/btn_follow"

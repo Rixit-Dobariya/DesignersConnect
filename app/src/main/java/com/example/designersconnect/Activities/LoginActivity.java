@@ -36,15 +36,18 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                binding.progressBar1.setVisibility(View.VISIBLE);
                 String email = binding.etLoginEmail.getText().toString();
                 String password = binding.etLoginPassword.getText().toString();
 
                 if(password.length() < 8)
                 {
                     Toast.makeText(LoginActivity.this, "Password must contain 8 or more letters", Toast.LENGTH_SHORT).show();
+                    binding.progressBar1.setVisibility(View.GONE);
                 }
                 else
                 {
+
                     mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>()
                     {
                         @Override
@@ -52,16 +55,16 @@ public class LoginActivity extends AppCompatActivity {
                         {
                             if (task.isSuccessful())
                             {
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                Toast.makeText(LoginActivity.this, ""+user.getDisplayName(), Toast.LENGTH_SHORT).show();
-
                                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(i);
                                 finish();
-                            } else
+                                binding.progressBar1.setVisibility(View.GONE);
+                            }
+                            else
                             {
                                 Toast.makeText(LoginActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
+                                binding.progressBar1.setVisibility(View.GONE);
                             }
                         }
                     });
